@@ -1,0 +1,510 @@
+<title>LESTER</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: oversized display type on a deep navy ground with a silver "minted coin" hero; a running blue ticker; stat tiles; lore in a two-column editorial band; numbered buy steps; contract card; FAQ accordion. Dark-first, Litecoin silver + blue + a single gold highlight. */
+:root{
+  --bg:#080D1A; --bg2:#0F1629; --card:#151E35; --card2:#1B2641; --line:#273452;
+  --fg:#F1F4FA; --muted:#98A4BE; --faint:#5F6B86;
+  --blue:#4F86F7; --blue-deep:#2A4F95; --silver:#C8CFDA; --gold:#FFC83D;
+  --up:#36D399; --down:#FF6B6B;
+  --display:'Bowlby One',Impact,'Arial Black',sans-serif;
+  --body:'Rubik','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:18px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#F4F6FB; --bg2:#E8ECF5; --card:#FFFFFF; --card2:#F0F3F9; --line:#D3DAE8;
+  --fg:#0F172A; --muted:#55617A; --faint:#8A94AB;
+  --blue:#2B63D9; --blue-deep:#1C4396; --silver:#5F6B86; --gold:#B8860B;
+  --up:#128A55; --down:#D43A3A; color-scheme:light; } }
+:root[data-theme="light"]{
+  --bg:#F4F6FB; --bg2:#E8ECF5; --card:#FFFFFF; --card2:#F0F3F9; --line:#D3DAE8;
+  --fg:#0F172A; --muted:#55617A; --faint:#8A94AB;
+  --blue:#2B63D9; --blue-deep:#1C4396; --silver:#5F6B86; --gold:#B8860B;
+  --up:#128A55; --down:#D43A3A; color-scheme:light; }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1;margin:0;text-wrap:balance;letter-spacing:.005em}
+h2{font-size:clamp(2.1rem,5.2vw,3.4rem)}
+p{margin:0}
+a{color:var(--blue)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:88px}
+.band.alt{background:var(--bg2)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:700;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--blue)}
+.lede{color:var(--muted);max-width:62ch;font-size:1.12rem}
+.sec-head{display:grid;gap:12px;max-width:62ch}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{font-family:var(--display);font-size:1.25rem;display:flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none}
+.brand img{width:30px;height:30px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px;font-weight:500;font-size:.95rem;align-items:center}
+nav ul a{color:var(--muted);text-decoration:none}
+nav ul a:hover{color:var(--fg)}
+nav .btn{padding:9px 16px;font-size:.9rem}
+@media (max-width:720px){nav ul li:not(.keep){display:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;border:2px solid transparent;transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:var(--body)}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--blue);color:#fff;box-shadow:0 10px 30px color-mix(in srgb,var(--blue) 40%,transparent)}
+.btn.ghost{border-color:var(--line);color:var(--fg);background:transparent}
+.btn.ghost:hover{border-color:var(--blue)}
+:is(a,button):focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:84px 72px;
+  background:
+    radial-gradient(900px 480px at 85% 10%,color-mix(in srgb,var(--blue-deep) 60%,transparent),transparent 70%),
+    radial-gradient(600px 400px at 10% 90%,color-mix(in srgb,var(--blue-deep) 30%,transparent),transparent 70%),
+    var(--bg)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:radial-gradient(60% 60% at 50% 40%,#000 20%,transparent 100%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(4rem,12vw,8.6rem);line-height:.86;text-transform:uppercase}
+.hero h1 .l1{display:block;color:var(--fg)}
+.hero h1 .l2{display:block;color:transparent;-webkit-text-stroke:2px var(--silver);font-size:.42em;letter-spacing:.02em;margin-top:14px}
+.hero .sub{font-size:1.25rem;color:var(--muted);margin-top:24px;max-width:48ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.badge{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--muted)}
+.badge b{color:var(--fg);font-weight:700}
+.coinbox{display:flex;justify-content:center;color:var(--fg)}
+.lester{width:min(320px,72vw);height:auto;max-width:100%;border-radius:28px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35));animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.lester,.ticker-inner{animation:none}}
+
+/* ticker */
+.ticker{background:var(--blue);color:#fff;overflow:hidden;font-family:var(--display);font-size:1rem;letter-spacing:.05em;white-space:nowrap;border-block:3px solid var(--gold)}
+.ticker-inner{display:inline-block;padding-block:11px;animation:scroll 32s linear infinite}
+.ticker-inner span{margin:0 26px}
+.ticker-inner span::after{content:"✦";margin-left:52px;color:var(--gold)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 22px 18px;min-width:0;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:color-mix(in srgb,var(--blue) 10%,transparent)}
+.stat .k{font-size:.76rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.stat .v{font-family:var(--display);font-size:clamp(1.5rem,3vw,2rem);margin-top:8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.1}
+.stat .d{font-size:.86rem;margin-top:8px;font-weight:600;color:var(--muted)}
+.up{color:var(--up)} .down{color:var(--down)}
+.changes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+@media (max-width:560px){.changes{grid-template-columns:repeat(2,1fr)}}
+.chip{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--card2);display:flex;justify-content:space-between;align-items:center;font-size:1rem}
+.chip b{color:var(--muted);font-weight:600;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em}
+.asof{color:var(--faint);font-size:.85rem;margin-top:16px;font-family:var(--mono)}
+.asof .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--faint);margin-right:8px;vertical-align:middle}
+.asof.live .dot{background:var(--up);box-shadow:0 0 0 4px color-mix(in srgb,var(--up) 25%,transparent)}
+
+/* rewards */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin-top:36px}
+@media (max-width:860px){.flow{grid-template-columns:1fr}.flow .arr{transform:rotate(90deg);justify-self:center}}
+.flow .box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.flow .box.hl{border-color:color-mix(in srgb,var(--gold) 50%,var(--line))}
+.flow .arr{align-self:center;font-family:var(--display);font-size:1.6rem;color:var(--faint)}
+.flow .pct{font-family:var(--display);font-size:2rem;color:var(--blue);line-height:1}
+.flow .box.hl .pct{color:var(--gold)}
+.flow .t{font-weight:700;margin-top:6px}
+.flow .s{color:var(--muted);font-size:.92rem;margin-top:4px}
+.split{display:grid;gap:10px;margin-top:12px}
+.split div{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:8px}
+.split b{font-variant-numeric:tabular-nums}
+.rw-stats{margin-top:20px}
+.stat .sub{font-family:var(--mono);font-size:.74rem;color:var(--faint);margin-top:6px}
+.bar{height:10px;border-radius:999px;background:var(--card2);border:1px solid var(--line);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--gold);width:0.6%;min-width:4px}
+.phases{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.95rem}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td{font-variant-numeric:tabular-nums}
+td small{display:block;color:var(--muted);font-size:.82rem}
+tr:last-child td{border-bottom:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;align-items:start}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.panel h3{font-size:1.25rem}
+.panel .lede{font-size:.98rem;margin-top:6px}
+.check{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.check input{flex:1 1 240px;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--fg);font:inherit;font-family:var(--mono);font-size:.85rem}
+.check input:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-color:var(--blue)}
+.result{margin-top:14px;font-size:.98rem;min-height:1.5em;color:var(--muted)}
+.result b{font-family:var(--display);font-size:1.5rem;color:var(--fg);display:block;line-height:1.1;margin-bottom:4px}
+.result.err{color:var(--down)}
+.log{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.log li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;font-size:.92rem;border-top:1px solid var(--line);padding-top:8px}
+.log .when{font-family:var(--mono);font-size:.74rem;color:var(--faint);white-space:nowrap}
+.log .amt{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.log .burn .amt{color:var(--gold)} .log .cash .amt{color:var(--up)}
+.note{color:var(--faint);font-size:.85rem;margin-top:18px;font-family:var(--mono)}
+
+/* lore */
+.lore{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+@media (max-width:860px){.lore{grid-template-columns:1fr;gap:36px}}
+.lore .copy p+p{margin-top:16px}
+.lore .copy .big{font-size:1.3rem;line-height:1.45;color:var(--fg);font-weight:500}
+.lore .copy p{color:var(--muted)}
+.quote{margin-top:28px;border-left:4px solid var(--gold);padding:6px 0 6px 20px;font-family:var(--display);font-size:1.35rem;line-height:1.25;color:var(--fg)}
+.facts{display:grid;gap:12px}
+.fact{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.fact .ic{width:44px;height:44px;flex:none;border-radius:12px;background:color-mix(in srgb,var(--blue) 18%,transparent);display:grid;place-items:center;color:var(--blue);font-family:var(--display);font-size:1.2rem}
+.fact b{display:block;font-size:1.05rem;font-weight:700}
+.fact small{color:var(--muted);font-size:.92rem;display:block;margin-top:2px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;counter-reset:s}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative;min-width:0;display:grid;gap:10px;align-content:start}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--display);font-size:2.8rem;color:transparent;-webkit-text-stroke:2px var(--blue);line-height:1}
+.step h3{font-size:1.3rem}
+.step p{color:var(--muted);font-size:.98rem}
+.step a{font-weight:700}
+.step .tip{font-family:var(--mono);font-size:.76rem;color:var(--gold);letter-spacing:.04em;margin-top:4px}
+.road .step::before{content:none}
+.road .st{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);display:inline-flex;align-items:center;gap:8px;justify-self:start;border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.road .st::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.road .done .st{color:var(--up);border-color:color-mix(in srgb,var(--up) 40%,var(--line))}
+.road .done .st::before{background:var(--up)}
+.road .next{border-color:color-mix(in srgb,var(--gold) 50%,var(--line));background:color-mix(in srgb,var(--gold) 6%,var(--card))}
+.road .next .st{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+.road .next .st::before{background:var(--gold)}
+
+/* contract */
+.contract{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+@media (max-width:860px){.contract{grid-template-columns:1fr}}
+.addr{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+@media (max-width:560px){.row{grid-template-columns:1fr auto}.row .lbl{grid-column:1/-1}}
+.row .lbl{font-weight:700;font-size:.9rem;color:var(--muted)}
+.row code{font-family:var(--mono);font-size:.84rem;color:var(--fg);min-width:0;overflow-wrap:anywhere;font-weight:500}
+.copy{border:1px solid var(--line);background:var(--card2);color:var(--fg);border-radius:8px;padding:7px 12px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.copy:hover{border-color:var(--blue);color:var(--blue)}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.warn{background:color-mix(in srgb,var(--gold) 12%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));border-radius:var(--r);padding:20px 22px}
+.warn b{display:block;font-family:var(--display);font-size:1.1rem;color:var(--gold);margin-bottom:6px}
+.warn p{color:var(--muted);font-size:.96rem}
+
+/* faq */
+.faq{display:grid;gap:10px;margin-top:36px;max-width:780px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 20px}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:700;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--display);color:var(--blue);font-size:1.3rem;flex:none}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);padding-bottom:18px}
+
+footer{padding-block:48px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+footer .wrap{display:grid;gap:16px}
+footer .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+footer .brand{font-size:1.1rem}
+</style>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">
+    <img src="data:image/webp;base64,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" alt="" width="30" height="30" style="border-radius:8px">
+    LESTER
+  </a>
+  <ul>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#lore">Lore</a></li>
+    <li><a href="#rewards">Rewards</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#buy">How to buy</a></li>
+    <li><a href="#contract">Contract</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li class="keep"><a class="btn primary" href="https://app.uniswap.org/swap?chain=base&outputCurrency=0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">Buy</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div>
+    <p class="eyebrow">Memecoin on Base · paired with cbLTC · 0.5% tax: half to holders, half burned</p>
+    <h1><span class="l1">Lester</span><span class="l2">The Litecoin Mascot</span></h1>
+    <p class="sub">A stick figure with the Litecoin logo for a head. That is the whole idea, and it is enough. Launched on Notus Pad, traded straight against Coinbase-wrapped Litecoin on Base, heading to LitVM when the chain is live.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://app.uniswap.org/swap?chain=base&outputCurrency=0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">Buy on Uniswap</a>
+      <a class="btn ghost" href="https://dexscreener.com/base/0x5259413992d9b5626e62125de8159ed67636f0d8" target="_blank" rel="noopener">Live chart</a>
+      <a class="btn ghost" href="https://x.com/LesterLTC" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="badges">
+      <span class="badge">Chain <b>Base</b></span>
+      <span class="badge">DEX <b>Uniswap v2</b></span>
+      <span class="badge">Pair <b>LESTER / cbLTC</b></span>
+      <span class="badge">Launched via <b>Notus Pad</b></span>
+      <span class="badge">Next stop <b>LitVM</b></span>
+    </div>
+  </div>
+  <div class="coinbox">
+    <img class="lester" src="data:image/webp;base64,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" alt="Lester, the Litecoin mascot" width="128" height="128">
+  </div>
+</div></header>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-inner" id="ticker"></div></div>
+
+<section class="band" id="market"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Market data</p>
+    <h2>The numbers, no makeup</h2>
+    <p class="lede">Straight from the LESTER / cbLTC pool on Uniswap v2. Small cap, thin liquidity, real volatility. Know what you are holding.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="k">Price</div><div class="v" id="price">$0.00003139</div><div class="d" id="ch24"></div></div>
+    <div class="stat"><div class="k">Market cap</div><div class="v" id="mcap">$31.2K</div><div class="d">Fully diluted, same number</div></div>
+    <div class="stat"><div class="k">Liquidity</div><div class="v" id="liq">$14.6K</div><div class="d" id="liqq">124.6 cbLTC in the pool</div></div>
+    <div class="stat"><div class="k">Volume 24h</div><div class="v" id="vol">$1.35K</div><div class="d" id="tx">36 buys · 23 sells</div></div>
+  </div>
+  <div class="changes" id="changes"></div>
+  <p class="asof" id="asof"><span class="dot"></span>DexScreener snapshot · Oct 31, 2026, 18:24 UTC</p>
+</div></section>
+
+
+<section class="band alt" id="rewards"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Rewards · burns · cashback</p>
+    <h2>Every trade pays the people who hold</h2>
+    <p class="lede">LESTER taxes itself and gives the tax back. Half of it lands in holders' pockets as cbLTC, the other half leaves the supply for good. All of it is enforced by the Notus launchpad contract, not by a wallet someone controls.</p>
+  </div>
+
+  <div class="flow">
+    <div class="box"><div class="pct">1%</div><div class="t">Paid on every swap</div><div class="s">Taken in LESTER on each buy and sell against the pool, then harvested by anyone.</div>
+      <div class="split"><div><span>Notus launchpad fee</span><b>0.5%</b></div><div><span>LESTER's own tax</span><b>0.5%</b></div></div></div>
+    <div class="arr">→</div>
+    <div class="box hl"><div class="pct">50%</div><div class="t">of the tax to holders</div><div class="s">Sold for cbLTC and credited pro rata to every wallet holding LESTER. Claim any time on Notus Pad.</div></div>
+    <div class="arr">→</div>
+    <div class="box hl"><div class="pct">50%</div><div class="t">of the tax burned</div><div class="s">Destroyed outright from pool fees. On the curve it bought LESTER back and burned it. Creator share: 0%.</div></div>
+  </div>
+
+  <div class="stats rw-stats">
+    <div class="stat"><div class="k">Burned so far</div><div class="v" id="burned">5,971,991</div><div class="d">LESTER · <span id="burnedPct">0.597%</span> of supply</div><div class="bar"><i id="burnBar"></i></div></div>
+    <div class="stat"><div class="k">Supply left</div><div class="v" id="supply">994.03M</div><div class="d">down from 1,000,000,000</div><div class="sub" id="eligible">751.7M in holder wallets earning cashback</div></div>
+    <div class="stat"><div class="k">Cashback to holders</div><div class="v" id="cashback">2.1975 cbLTC</div><div class="d"><span id="cashbackUsd">≈ $121.7</span> · 0.1326 claimed by 8 wallets</div></div>
+    <div class="stat"><div class="k">Burn pot waiting</div><div class="v" id="burnPot">0.1043 cbLTC</div><div class="d">anyone can trigger the next buyback</div><div class="sub">cooldown: 1 block</div></div>
+  </div>
+
+  <div class="phases">
+    <table>
+      <thead><tr><th>Phase</th><th>Trades</th><th>Fees collected</th><th>To holders</th><th>Burned</th></tr></thead>
+      <tbody>
+        <tr><td><b>Bonding curve</b><small>Oct 26 to Oct 28, 2026</small></td><td>138 <small>97 buys · 41 sells</small></td><td>6.5937 cbLTC <small>half Notus fee, half LESTER tax</small></td><td>1.6484 cbLTC</td><td>4,571,534 LESTER <small>6 buybacks, 1.5441 cbLTC spent</small></td></tr>
+        <tr><td><b>Uniswap v2 pool</b><small>since Oct 28, 2026</small></td><td>135 <small>taxed swaps</small></td><td>5.80M LESTER <small>sold in 43 harvests</small></td><td>0.5491 cbLTC</td><td>1,400,457 LESTER <small>burned straight from fees</small></td></tr>
+        <tr><td><b>Total</b></td><td>273</td><td></td><td><b>2.1975 cbLTC</b></td><td><b>5,971,991 LESTER</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Check your cashback</h3>
+      <p class="lede">Paste a wallet address to read its claimable cbLTC straight from the contract. Nothing is sent anywhere.</p>
+      <form class="check" id="cbForm"><input id="addr" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x… your Base wallet" aria-label="Wallet address"><button class="btn primary" type="submit" id="cbBtn">Check</button></form>
+      <div class="result" id="cbResult">Enter an address to see what it has earned.</div>
+      <p class="note">Claim on <a href="https://notus-pad.fun" target="_blank" rel="noopener">notus-pad.fun</a> with the same wallet. Cashback keeps accruing until you claim.</p>
+    </div>
+    <div class="panel">
+      <h3>Burn and payout log</h3>
+      <p class="lede">The six buybacks on the curve and the most recent pool harvests, from the launchpad's own events.</p>
+      <ul class="log">
+        <li class="burn"><span class="when">Oct 26</span><span>Buyback #1</span><span class="amt">−968,608 LESTER</span></li>
+        <li class="burn"><span class="when">Oct 27</span><span>Buyback #2</span><span class="amt">−346,740 LESTER</span></li>
+        <li class="burn"><span class="when">Oct 27</span><span>Buyback #3</span><span class="amt">−223,719 LESTER</span></li>
+        <li class="burn"><span class="when">Oct 27</span><span>Buyback #4</span><span class="amt">−2,685,995 LESTER</span></li>
+        <li class="burn"><span class="when">Oct 27</span><span>Buyback #5</span><span class="amt">−323,816 LESTER</span></li>
+        <li class="burn"><span class="when">Oct 28</span><span>Buyback #6, last on the curve</span><span class="amt">−22,655 LESTER</span></li>
+        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0334 cbLTC</span></li>
+        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0153 cbLTC</span></li>
+        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0158 cbLTC</span></li>
+        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0092 cbLTC</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="asof" id="rwAsof"><span class="dot"></span>On-chain snapshot · Base block 53,340,753 · Oct 31, 2026, 18:20 UTC. Live figures load when the page is hosted.</p>
+</div></section>
+
+<section class="band" id="lore"><div class="wrap">
+  <div class="lore">
+    <div class="copy">
+      <p class="eyebrow">Lore</p>
+      <h2 style="margin-top:12px">Every chain gets a mascot. Litecoin waited fifteen years.</h2>
+      <p class="big" style="margin-top:22px">Litecoin launched in October 2011 as a faster, lighter fork of Bitcoin. It survived every cycle, every "Litecoin is dead" thread and every halving. What it never had was a face people could put on a sticker.</p>
+      <p>Lester is that face. A stick figure with the Litecoin logo for a head, drawn by a meme artist and adopted by the community, with the calm of someone who has watched the top ten reshuffle a dozen times and is still here.</p>
+      <p>He was launched through Notus Pad and lives on Base for now, because that is where a memecoin can actually trade today: cheap, fast and in a wallet you already have. The pool is paired with cbLTC, Coinbase's wrapped Litecoin, so every LESTER buy is Litecoin flowing into the pool.</p>
+      <p>Base is the waiting room, not the destination. When LitVM, the Litecoin virtual machine chain, goes live, Lester migrates home.</p>
+      <p class="quote">"Silver never needed to be gold. It just needed a mascot."</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="ic">Ł</div><div><b>Priced in Litecoin</b><small>LESTER / cbLTC on Uniswap v2. No ETH or stablecoin leg in the middle.</small></div></div>
+      <div class="fact"><div class="ic">◆</div><div><b>Built on Base</b><small>Coinbase's Ethereum layer 2. Fees in cents, confirmations in seconds.</small></div></div>
+      <div class="fact"><div class="ic">◎</div><div><b>Every trade pays holders</b><small>0.5% tax on each swap: half goes to holders as cbLTC cashback, half is burned. Nothing to the team.</small></div></div>
+      <div class="fact"><div class="ic">▲</div><div><b>Launched on Notus Pad</b><small>Fair launch on the Notus Pad bonding curve, Oct 26 to 28, 2026. If you are reading this, you are early.</small></div></div>
+      <div class="fact"><div class="ic">→</div><div><b>Migrating to LitVM</b><small>Once the LitVM chain is live, LESTER moves to Litecoin's own smart-contract layer.</small></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="band alt" id="roadmap"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Roadmap</p>
+    <h2>From Base to Litecoin's own chain</h2>
+    <p class="lede">Three stages. Two are done. The third waits on a chain that is not live yet, so there is no date to promise.</p>
+  </div>
+  <div class="steps road">
+    <div class="step done"><span class="st">Done</span><h3>Launch on Notus Pad</h3><p>Created on Oct 26, 2026. The bonding curve sold out its 800M tokens in about 30 hours and the coin graduated on Oct 28.</p></div>
+    <div class="step done"><span class="st">Live now</span><h3>Trading on Base</h3><p>The LESTER / cbLTC pool is live on Uniswap v2 on Base. This is where the token lives and trades until the next stage.</p></div>
+    <div class="step next"><span class="st">When LitVM is live</span><h3>Migrate to LitVM</h3><p>When the LitVM chain launches, LESTER migrates there so the Litecoin mascot runs on Litecoin's own smart-contract layer. Migration details will be published here first.</p></div>
+  </div>
+</div></section>
+
+<section class="band" id="buy"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">How to buy</p>
+    <h2>Three steps, no sketchy bridges</h2>
+    <p class="lede">You need a wallet on Base and a few dollars of ETH for gas. Everything else happens on Uniswap.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><h3>Get a wallet on Base</h3><p>Install <a href="https://wallet.coinbase.com" target="_blank" rel="noopener">Coinbase Wallet</a>, MetaMask or Rabby and switch to the Base network. Send a small amount of ETH to Base for gas.</p><p class="tip">Tip: $2 of ETH covers dozens of swaps.</p></div>
+    <div class="step"><h3>Fund it with cbLTC</h3><p>Buy Litecoin on Coinbase and withdraw it to Base: it arrives as cbLTC. Or start from ETH on Uniswap and let the router route through cbLTC for you.</p><p class="tip">cbLTC = Coinbase Wrapped LTC on Base.</p></div>
+    <div class="step"><h3>Swap on Uniswap</h3><p>Open <a href="https://app.uniswap.org/swap?chain=base&outputCurrency=0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">the swap with LESTER preselected</a>, confirm the token address matches the one below, set slippage to 3 to 5% and confirm.</p><p class="tip">Thin liquidity: keep single orders small.</p></div>
+  </div>
+</div></section>
+
+<section class="band alt" id="contract"><div class="wrap">
+  <div class="contract">
+    <div>
+      <div class="sec-head">
+        <p class="eyebrow">Contract</p>
+        <h2>Always verify the address</h2>
+        <p class="lede">A dozen tokens share this name. This is the only LESTER this page is about.</p>
+      </div>
+      <div class="addr" style="margin-top:28px">
+        <div class="row"><span class="lbl">Token</span><code id="a1">0x319A4924f6660A0660845418FA754a7684C19200</code><button class="copy" data-copy="a1" type="button">Copy</button></div>
+        <div class="row"><span class="lbl">Pool (pair)</span><code id="a2">0x5259413992d9B5626e62125De8159ED67636f0d8</code><button class="copy" data-copy="a2" type="button">Copy</button></div>
+        <div class="row"><span class="lbl">Quote token</span><code>cbLTC · Coinbase Wrapped LTC</code><span></span></div>
+        <div class="row"><span class="lbl">Venue</span><code>Uniswap v2 · Base (chain id 8453)</code><span></span></div>
+      </div>
+      <div class="links">
+        <a class="btn ghost" href="https://basescan.org/token/0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">Basescan</a>
+        <a class="btn ghost" href="https://dexscreener.com/base/0x5259413992d9b5626e62125de8159ed67636f0d8" target="_blank" rel="noopener">DexScreener</a>
+        <a class="btn ghost" href="https://app.uniswap.org/explore/tokens/base/0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">Uniswap</a>
+      </div>
+    </div>
+    <div class="warn">
+      <b>Before you ape</b>
+      <p>LESTER is a brand-new memecoin with roughly fourteen thousand dollars of liquidity. A single mid-sized order moves the price by double digits, and the chart can swing 40% in a day, as it did on launch day. Check the contract on Basescan, never paste a seed phrase anywhere, and ignore anyone in your DMs offering "support".</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="faq"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">FAQ</p>
+    <h2>Things people keep asking Lester</h2>
+  </div>
+  <div class="faq">
+    <details><summary>Is LESTER affiliated with Litecoin or Charlie Lee?</summary><p>No. Lester is a community mascot and a memecoin, not a project of the Litecoin Foundation, Litecoin's developers or Charlie Lee. It is a tribute, not an endorsement.</p></details>
+    <details><summary>Why is it on Base and not on Litecoin?</summary><p>Litecoin has no smart contracts in the way Ethereum does, so a token like this cannot live there directly yet. Base has cheap swaps, a huge wallet base and a native wrapped Litecoin (cbLTC), which lets Lester be priced in LTC in the meantime. When LitVM goes live, LESTER migrates there.</p></details>
+    <details><summary>What is Notus Pad?</summary><p>Notus Pad is the open-source launchpad LESTER launched through. The coin was created on Oct 26, 2026, sold 800M tokens along a bonding curve priced in cbLTC, and graduated on Oct 28 into a locked Uniswap v2 pool. The whole supply is in circulation, which is why market cap and fully diluted value match.</p></details>
+    <details><summary>What is LitVM and when does the migration happen?</summary><p>LitVM is the Litecoin virtual machine, a smart-contract chain built around Litecoin. The migration happens once that chain is live. There is no fixed date, and anyone giving you one is guessing. Migration steps will be published on this site before anything moves.</p></details>
+    <details><summary>What is cbLTC?</summary><p>Coinbase Wrapped LTC. It is an ERC-20 on Base backed one-to-one by Litecoin held at Coinbase. You get it by withdrawing LTC from Coinbase to the Base network.</p></details>
+    <details><summary>Why do market cap and FDV match?</summary><p>Because the full supply is already in circulation and there is no team allocation. The supply only ever shrinks: every burn lowers it, so market cap and fully diluted value stay identical.</p></details>
+    <details><summary>Is there a tax? Where does it go?</summary><p>Yes. Every swap pays 1% in LESTER: 0.5% is the Notus launchpad fee and goes to its treasury, 0.5% is the coin's own tax. That tax is split in half: 50% is sold for cbLTC and credited to every holder pro rata, 50% is burned. The creator takes 0%. The split is fixed in the contract and cannot be changed.</p></details>
+    <details><summary>How do I claim my cashback?</summary><p>Cashback accrues in cbLTC inside the Notus launchpad contract while you hold LESTER in a normal wallet. Check your balance in the Rewards section above, then claim it on <a href="https://notus-pad.fun" target="_blank" rel="noopener">Notus Pad</a> with the same wallet. Tokens sitting in a pool or in a contract earn nothing.</p></details>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="top">
+    <span class="brand">Ł LESTER</span>
+    <span><a href="https://x.com/LesterLTC" target="_blank" rel="noopener">@LesterLTC on X</a> · Market data by DexScreener · On-chain data via Base RPC</span>
+  </div>
+  <p><b>LESTER</b> is a memecoin. It has no intrinsic value, promises no returns and is not affiliated with the Litecoin Foundation, Coinbase or Uniswap. The price can go to zero.</p>
+  <p>Nothing on this site is financial advice. Only spend what you are fully prepared to lose.</p>
+</div></footer>
+
+<script>
+(function(){
+  var snap={priceUsd:"0.00003139",priceNative:"0.0000005667",marketCap:31212,liquidity:{usd:14609.21,quote:131.8411},volume:{h24:1354.17},txns:{h24:{buys:6,sells:8}},priceChange:{m5:0,h1:16.11,h6:16.11,h24:26.08}};
+  function $(id){return document.getElementById(id)}
+  function usd(n){ if(n>=1e6)return "$"+(n/1e6).toFixed(2)+"M"; if(n>=1e3)return "$"+(n/1e3).toFixed(1)+"K"; return "$"+n.toFixed(2); }
+  function pct(v){ var s=(v>=0?"+":"")+v.toFixed(1)+"%"; return '<span class="'+(v>=0?"up":"down")+'">'+s+"</span>"; }
+  function render(p){
+    var price="$"+Number(p.priceUsd).toLocaleString("en-US",{maximumSignificantDigits:4});
+    $("price").textContent=price;
+    $("ch24").innerHTML=pct(p.priceChange.h24)+" over 24h";
+    $("mcap").textContent=usd(p.marketCap);
+    $("liq").textContent=usd(p.liquidity.usd);
+    $("liqq").textContent=(p.liquidity.quote||0).toFixed(1)+" cbLTC in the pool";
+    $("vol").textContent=usd(p.volume.h24);
+    $("tx").textContent=p.txns.h24.buys+" buys · "+p.txns.h24.sells+" sells";
+    $("changes").innerHTML=[["m5","5 MIN"],["h1","1 HOUR"],["h6","6 HOURS"],["h24","24 HOURS"]].map(function(k){return '<span class="chip"><b>'+k[1]+'</b>'+pct(p.priceChange[k[0]])+"</span>"}).join("");
+    var t="<span>LESTER "+price+"</span><span>24H "+((p.priceChange.h24>=0?"+":"")+p.priceChange.h24.toFixed(1))+"%</span><span>MCAP "+usd(p.marketCap)+"</span><span>LIQUIDITY "+usd(p.liquidity.usd)+"</span><span>THE LITECOIN MASCOT</span><span>LAUNCHED ON NOTUS PAD</span><span>MIGRATING TO LITVM</span>";
+    $("ticker").innerHTML=t+t;
+  }
+  render(snap);
+  // Live refresh: works when hosted on a normal web server; falls back to the snapshot otherwise.
+  try{
+    fetch("https://api.dexscreener.com/latest/dex/pairs/base/0x5259413992d9b5626e62125de8159ed67636f0d8").then(function(r){return r.json()}).then(function(d){
+      var p=d&&d.pair; if(!p)return; render(p);
+      var a=$("asof"); a.classList.add("live");
+      a.innerHTML='<span class="dot"></span>Live from DexScreener · updated '+new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    }).catch(function(){});
+  }catch(e){}
+  document.querySelectorAll(".copy").forEach(function(b){
+    b.addEventListener("click",function(){
+      var el=$(b.getAttribute("data-copy")), txt=el.textContent;
+      function done(){ b.textContent="Copied"; setTimeout(function(){b.textContent="Copy"},1500); }
+      function sel(){ var r=document.createRange(); r.selectNodeContents(el); var s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try{ navigator.clipboard.writeText(txt).then(done,sel); }catch(e){ sel(); }
+    });
+  });
+})();
+
+// ---- On-chain rewards (Base RPC). Blocked inside the artifact sandbox; live once hosted.
+(function(){
+  var RPC="https://base-rpc.publicnode.com", PAD="0x23231924281B34Bb28F10D854DB8D2DcBd7F78c5", TOKEN="0x319A4924f6660A0660845418FA754a7684C19200";
+  var SEL={burned:"0xa7509b83",burnPot:"0x4dd8afb6",eligible:"0xe15904e0",cashbackOf:"0x0e4a9123"};
+  var SUPPLY0=1e9, LTC_USD=55.39;
+  function pad(a){return a.toLowerCase().replace("0x","").padStart(64,"0")}
+  function call(to,data){return fetch(RPC,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:to,data:data},"latest"]})}).then(function(r){return r.json()}).then(function(j){if(j.error)throw j.error;return BigInt(j.result)})}
+  function fmtInt(n){return Math.round(n).toLocaleString("en-US")}
+  function $(id){return document.getElementById(id)}
+  function toNum(bi,dec){return Number(bi)/Math.pow(10,dec)}
+  Promise.all([
+    call(TOKEN,"0x18160ddd"),
+    call(PAD,SEL.burned+pad(TOKEN)),
+    call(PAD,SEL.burnPot+pad(TOKEN)),
+    call(PAD,SEL.eligible+pad(TOKEN))
+  ]).then(function(r){
+    var supply=toNum(r[0],18), burned=toNum(r[1],18), pot=toNum(r[2],8), elig=toNum(r[3],18);
+    $("burned").textContent=fmtInt(burned);
+    $("burnedPct").textContent=(burned/SUPPLY0*100).toFixed(3)+"%";
+    $("burnBar").style.width=Math.max(0.6,burned/SUPPLY0*100)+"%";
+    $("supply").textContent=(supply/1e6).toFixed(2)+"M";
+    $("eligible").textContent=(elig/1e6).toFixed(1)+"M in holder wallets earning cashback";
+    $("burnPot").textContent=pot.toFixed(4)+" cbLTC";
+    var a=$("rwAsof"); a.classList.add("live"); a.innerHTML='<span class="dot"></span>Live from Base · burned, supply and burn pot read from the contract just now. Cashback totals and the log are the Oct 31 snapshot.';
+  }).catch(function(){});
+  var form=$("cbForm"), out=$("cbResult");
+  if(form) form.addEventListener("submit",function(e){
+    e.preventDefault();
+    var a=$("addr").value.trim();
+    if(!/^0x[0-9a-fA-F]{40}$/.test(a)){out.className="result err";out.textContent="That is not a valid address. It should start with 0x and be 42 characters long.";return;}
+    out.className="result"; out.textContent="Reading the contract…";
+    Promise.all([call(PAD,SEL.cashbackOf+pad(TOKEN)+pad(a)), call(TOKEN,"0x70a08231"+pad(a))]).then(function(r){
+      var cb=toNum(r[0],8), bal=toNum(r[1],18);
+      out.innerHTML="<b>"+cb.toFixed(6)+" cbLTC</b>claimable now (≈ $"+(cb*LTC_USD).toFixed(2)+"). This wallet holds "+fmtInt(bal)+" LESTER"+(bal>0?", so it keeps earning on every trade.":".");
+    }).catch(function(){ out.className="result err"; out.textContent="Could not reach the Base RPC from here. Open the hosted site, or check on Notus Pad."; });
+  });
+})();
+</script>
