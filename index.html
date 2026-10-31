@@ -69,7 +69,7 @@ nav .btn{padding:9px 16px;font-size:.9rem}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
   background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
   background-size:48px 48px;mask-image:radial-gradient(60% 60% at 50% 40%,#000 20%,transparent 100%)}
-.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
 @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
 .hero h1{font-size:clamp(4rem,12vw,8.6rem);line-height:.86;text-transform:uppercase}
 .hero h1 .l1{display:block;color:var(--fg)}
@@ -79,10 +79,7 @@ nav .btn{padding:9px 16px;font-size:.9rem}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
 .badge{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--muted)}
 .badge b{color:var(--fg);font-weight:700}
-.coinbox{display:flex;justify-content:center;color:var(--fg)}
-.lester{width:min(320px,72vw);height:auto;max-width:100%;border-radius:28px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35));animation:bob 5s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@media (prefers-reduced-motion:reduce){.lester,.ticker-inner{animation:none}}
+@media (prefers-reduced-motion:reduce){.ticker-inner{animation:none}}
 
 /* ticker */
 .ticker{background:var(--blue);color:#fff;overflow:hidden;font-family:var(--display);font-size:1rem;letter-spacing:.05em;white-space:nowrap;border-block:3px solid var(--gold)}
@@ -182,7 +179,7 @@ tr:last-child td{border-bottom:0}
 .road .next .st::before{background:var(--gold)}
 
 /* contract */
-.contract{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.contract{display:grid;grid-template-columns:1fr;gap:36px;align-items:start}
 @media (max-width:860px){.contract{grid-template-columns:1fr}}
 .addr{display:grid;gap:12px}
 .row{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
@@ -192,9 +189,6 @@ tr:last-child td{border-bottom:0}
 .copy{border:1px solid var(--line);background:var(--card2);color:var(--fg);border-radius:8px;padding:7px 12px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .copy:hover{border-color:var(--blue);color:var(--blue)}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.warn{background:color-mix(in srgb,var(--gold) 12%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));border-radius:var(--r);padding:20px 22px}
-.warn b{display:block;font-family:var(--display);font-size:1.1rem;color:var(--gold);margin-bottom:6px}
-.warn p{color:var(--muted);font-size:.96rem}
 
 /* faq */
 .faq{display:grid;gap:10px;margin-top:36px;max-width:780px}
@@ -245,9 +239,6 @@ footer .brand{font-size:1.1rem}
       <span class="badge">Launched via <b>Notus Pad</b></span>
       <span class="badge">Next stop <b>LitVM</b></span>
     </div>
-  </div>
-  <div class="coinbox">
-    <img class="lester" src="data:image/webp;base64,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" alt="Lester, the Litecoin mascot" width="128" height="128">
   </div>
 </div></header>
 
@@ -398,10 +389,6 @@ footer .brand{font-size:1.1rem}
         <a class="btn ghost" href="https://dexscreener.com/base/0x5259413992d9b5626e62125de8159ed67636f0d8" target="_blank" rel="noopener">DexScreener</a>
         <a class="btn ghost" href="https://app.uniswap.org/explore/tokens/base/0x319A4924f6660A0660845418FA754a7684C19200" target="_blank" rel="noopener">Uniswap</a>
       </div>
-    </div>
-    <div class="warn">
-      <b>Before you ape</b>
-      <p>LESTER is a brand-new memecoin with roughly fourteen thousand dollars of liquidity. A single mid-sized order moves the price by double digits, and the chart can swing 40% in a day, as it did on launch day. Check the contract on Basescan, never paste a seed phrase anywhere, and ignore anyone in your DMs offering "support".</p>
     </div>
   </div>
 </div></section>
