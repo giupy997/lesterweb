@@ -186,8 +186,8 @@ tr:last-child td{border-bottom:0}
 @media (max-width:560px){.row{grid-template-columns:1fr auto}.row .lbl{grid-column:1/-1}}
 .row .lbl{font-weight:700;font-size:.9rem;color:var(--muted)}
 .row code{font-family:var(--mono);font-size:.84rem;color:var(--fg);min-width:0;overflow-wrap:anywhere;font-weight:500}
-.copy{border:1px solid var(--line);background:var(--card2);color:var(--fg);border-radius:8px;padding:7px 12px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
-.copy:hover{border-color:var(--blue);color:var(--blue)}
+.copybtn{border:1px solid var(--line);background:var(--card2);color:var(--fg);border-radius:8px;padding:7px 12px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.copybtn:hover{border-color:var(--blue);color:var(--blue)}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 
 /* faq */
@@ -379,8 +379,8 @@ footer .brand{font-size:1.1rem}
         <p class="lede">A dozen tokens share this name. This is the only LESTER this page is about.</p>
       </div>
       <div class="addr" style="margin-top:28px">
-        <div class="row"><span class="lbl">Token</span><code id="a1">0x319A4924f6660A0660845418FA754a7684C19200</code><button class="copy" data-copy="a1" type="button">Copy</button></div>
-        <div class="row"><span class="lbl">Pool (pair)</span><code id="a2">0x5259413992d9B5626e62125De8159ED67636f0d8</code><button class="copy" data-copy="a2" type="button">Copy</button></div>
+        <div class="row"><span class="lbl">Token</span><code id="a1">0x319A4924f6660A0660845418FA754a7684C19200</code><button class="copybtn" data-copy="a1" type="button">Copy</button></div>
+        <div class="row"><span class="lbl">Pool (pair)</span><code id="a2">0x5259413992d9B5626e62125De8159ED67636f0d8</code><button class="copybtn" data-copy="a2" type="button">Copy</button></div>
         <div class="row"><span class="lbl">Quote token</span><code>cbLTC · Coinbase Wrapped LTC</code><span></span></div>
         <div class="row"><span class="lbl">Venue</span><code>Uniswap v2 · Base (chain id 8453)</code><span></span></div>
       </div>
@@ -447,7 +447,7 @@ footer .brand{font-size:1.1rem}
       a.innerHTML='<span class="dot"></span>Live from DexScreener · updated '+new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
     }).catch(function(){});
   }catch(e){}
-  document.querySelectorAll(".copy").forEach(function(b){
+  document.querySelectorAll(".copybtn").forEach(function(b){
     b.addEventListener("click",function(){
       var el=$(b.getAttribute("data-copy")), txt=el.textContent;
       function done(){ b.textContent="Copied"; setTimeout(function(){b.textContent="Copy"},1500); }
