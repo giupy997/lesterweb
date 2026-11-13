@@ -146,7 +146,15 @@ def main():
     st = old.get("state") or fresh_state()
     head = int(rpc("eth_blockNumber", []), 16) - 10  # stay clear of reorgs
     print(f"scanning {st['scannedTo'] + 1} -> {head}")
+    before = json.dumps(dict(st, scannedTo=0), sort_keys=True)
     scan(st, head)
+    changed = json.dumps(dict(st, scannedTo=0), sort_keys=True) != before
+    if old.get("updatedAt") and not changed and "--force" not in sys.argv:
+        then = datetime.datetime.strptime(old["updatedAt"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+        age = time.time() - then.timestamp()
+        if age < 3 * 3600:
+            print(f"no new burns, payouts or claims and data.json is {age / 60:.0f} min old: leaving it as is")
+            return
 
     q = lambda s: int(s) / 1e8   # cbLTC has 8 decimals
     t = lambda s: int(s) / 1e18
