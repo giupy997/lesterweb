@@ -149,7 +149,7 @@ tr:last-child td{border-bottom:0}
 .result.err{color:var(--down)}
 .log{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
 .log li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;font-size:.92rem;border-top:1px solid var(--line);padding-top:8px}
-.log .when{font-family:var(--mono);font-size:.74rem;color:var(--faint);white-space:nowrap}
+.log .when{font-family:var(--mono);font-size:.74rem;color:var(--faint);white-space:nowrap;min-width:5.2em}
 .log .amt{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
 .log .burn .amt{color:var(--gold)} .log .cash .amt{color:var(--up)}
 .note{color:var(--faint);font-size:.85rem;margin-top:18px;font-family:var(--mono)}
@@ -264,7 +264,7 @@ footer .brand{font-size:1.1rem}
     <div class="stat"><div class="k">Volume 24h</div><div class="v" id="vol">$1.35K</div><div class="d" id="tx">36 buys · 23 sells</div></div>
   </div>
   <div class="changes" id="changes"></div>
-  <p class="asof" id="asof"><span class="dot"></span>DexScreener snapshot · Oct 31, 2026, 18:24 UTC</p>
+  <p class="asof" id="asof"><span class="dot"></span></p>
 </div></section>
 
 
@@ -285,20 +285,16 @@ footer .brand{font-size:1.1rem}
   </div>
 
   <div class="stats rw-stats">
-    <div class="stat"><div class="k">Burned so far</div><div class="v" id="burned">5,971,991</div><div class="d">LESTER · <span id="burnedPct">0.597%</span> of supply</div><div class="bar"><i id="burnBar"></i></div></div>
-    <div class="stat"><div class="k">Supply left</div><div class="v" id="supply">994.03M</div><div class="d">down from 1,000,000,000</div><div class="sub" id="eligible">751.7M in holder wallets earning cashback</div></div>
-    <div class="stat"><div class="k">Cashback to holders</div><div class="v" id="cashback">2.1975 cbLTC</div><div class="d"><span id="cashbackUsd">≈ $121.7</span> · 0.1326 claimed by 8 wallets</div></div>
-    <div class="stat"><div class="k">Burn pot waiting</div><div class="v" id="burnPot">0.1043 cbLTC</div><div class="d">anyone can trigger the next buyback</div><div class="sub">cooldown: 1 block</div></div>
+    <div class="stat"><div class="k">Burned so far</div><div class="v" id="burned">–</div><div class="d">LESTER · <span id="burnedPct">–</span> of supply</div><div class="bar"><i id="burnBar"></i></div></div>
+    <div class="stat"><div class="k">Supply left</div><div class="v" id="supply">–</div><div class="d">down from 1,000,000,000</div><div class="sub" id="eligible"></div></div>
+    <div class="stat"><div class="k">Cashback to holders</div><div class="v" id="cashback">–</div><div class="d" id="cashbackSub"></div></div>
+    <div class="stat"><div class="k">Burn pot waiting</div><div class="v" id="burnPot">–</div><div class="d">anyone can trigger the next buyback</div><div class="sub">cooldown: 1 block</div></div>
   </div>
 
   <div class="phases">
     <table>
       <thead><tr><th>Phase</th><th>Trades</th><th>Fees collected</th><th>To holders</th><th>Burned</th></tr></thead>
-      <tbody>
-        <tr><td><b>Bonding curve</b><small>Oct 26 to Oct 28, 2026</small></td><td>138 <small>97 buys · 41 sells</small></td><td>6.5937 cbLTC <small>half Notus fee, half LESTER tax</small></td><td>1.6484 cbLTC</td><td>4,571,534 LESTER <small>6 buybacks, 1.5441 cbLTC spent</small></td></tr>
-        <tr><td><b>Uniswap v2 pool</b><small>since Oct 28, 2026</small></td><td>135 <small>taxed swaps</small></td><td>5.80M LESTER <small>sold in 43 harvests</small></td><td>0.5491 cbLTC</td><td>1,400,457 LESTER <small>burned straight from fees</small></td></tr>
-        <tr><td><b>Total</b></td><td>273</td><td></td><td><b>2.1975 cbLTC</b></td><td><b>5,971,991 LESTER</b></td></tr>
-      </tbody>
+      <tbody id="phaseRows"></tbody>
     </table>
   </div>
 
@@ -312,22 +308,11 @@ footer .brand{font-size:1.1rem}
     </div>
     <div class="panel">
       <h3>Burn and payout log</h3>
-      <p class="lede">The six buybacks on the curve and the most recent pool harvests, from the launchpad's own events.</p>
-      <ul class="log">
-        <li class="burn"><span class="when">Oct 26</span><span>Buyback #1</span><span class="amt">−968,608 LESTER</span></li>
-        <li class="burn"><span class="when">Oct 27</span><span>Buyback #2</span><span class="amt">−346,740 LESTER</span></li>
-        <li class="burn"><span class="when">Oct 27</span><span>Buyback #3</span><span class="amt">−223,719 LESTER</span></li>
-        <li class="burn"><span class="when">Oct 27</span><span>Buyback #4</span><span class="amt">−2,685,995 LESTER</span></li>
-        <li class="burn"><span class="when">Oct 27</span><span>Buyback #5</span><span class="amt">−323,816 LESTER</span></li>
-        <li class="burn"><span class="when">Oct 28</span><span>Buyback #6, last on the curve</span><span class="amt">−22,655 LESTER</span></li>
-        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0334 cbLTC</span></li>
-        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0153 cbLTC</span></li>
-        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0158 cbLTC</span></li>
-        <li class="cash"><span class="when">Oct 30</span><span>Pool harvest → holders</span><span class="amt">+0.0092 cbLTC</span></li>
-      </ul>
+      <p class="lede">The latest burns and holder payouts, from the contract's own events.</p>
+      <ul class="log" id="log"></ul>
     </div>
   </div>
-  <p class="asof" id="rwAsof"><span class="dot"></span>On-chain snapshot · Base block 53,340,753 · Oct 31, 2026, 18:20 UTC. Live figures load when the page is hosted.</p>
+  <p class="asof" id="rwAsof"><span class="dot"></span></p>
 </div></section>
 
 <section class="band" id="lore"><div class="wrap">
@@ -426,79 +411,114 @@ footer .brand{font-size:1.1rem}
   <p>Nothing on this site is financial advice. Only spend what you are fully prepared to lose.</p>
 </div></footer>
 
+<script id="snap" type="application/json">{"updatedAt":"2026-11-13T18:32:54Z","block":57021418,"market":{"priceUsd":"0.00002807","priceNative":"0.0000005671","marketCap":27834,"liquidity":{"usd":13138.86,"base":233999437,"quote":132.7177},"volume":{"h24":9370.63,"h6":1979.12,"h1":313.17,"m5":292.95},"txns":{"m5":{"buys":0,"sells":2},"h1":{"buys":0,"sells":4},"h6":{"buys":4,"sells":10},"h24":{"buys":32,"sells":37}},"priceChange":{"m5":-8.36,"h1":-8.03,"h6":-28.27,"h24":-9.14}},"chain":{"supply":991392256.7107872,"burned":8607743.289212784,"burnPot":0.0,"eligible":747869010.0676762},"curve":{"buys":97,"sells":41,"fees":6.59365176,"toHolders":1.64841294,"buybacks":6,"buybackQuote":1.54413943,"burned":4571533.97771972},"pool":{"taxedSwaps":372,"taxedTokens":15529272.00284128,"harvests":102,"toHolders":2.11330507,"buybacks":1,"buybackQuote":0.10427329,"burned":4036209.3114930633},"cashback":{"total":3.76171801,"claimed":0.86173611,"claims":24,"wallets":17},"recent":[{"type":"cashback","block":56909248,"amount":0.01862891,"ts":1794572225},{"type":"burn","block":56909248,"amount":23650.11638436912,"ts":1794572225},{"type":"cashback","block":56959425,"amount":0.03836016,"ts":1794582260},{"type":"burn","block":56959425,"amount":60553.57940530235,"ts":1794582260},{"type":"cashback","block":56992197,"amount":0.02200593,"ts":1794588815},{"type":"burn","block":56992197,"amount":39627.02739356433,"ts":1794588815},{"type":"cashback","block":56999684,"amount":0.0039155,"ts":1794590312},{"type":"burn","block":56999684,"amount":6891.022268027267,"ts":1794590312},{"type":"cashback","block":57002905,"amount":0.01578869,"ts":1794590956},{"type":"burn","block":57002905,"amount":25425.860288405456,"ts":1794590956},{"type":"cashback","block":57018533,"amount":0.00102177,"ts":1794594082},{"type":"burn","block":57018533,"amount":1655.71579512132,"ts":1794594082},{"type":"cashback","block":57020645,"amount":0.01420276,"ts":1794594504},{"type":"burn","block":57020645,"amount":25108.6726813076,"ts":1794594504}]}</script>
 <script>
 (function(){
-  var snap={priceUsd:"0.00003139",priceNative:"0.0000005667",marketCap:31212,liquidity:{usd:14609.21,quote:131.8411},volume:{h24:1354.17},txns:{h24:{buys:6,sells:8}},priceChange:{m5:0,h1:16.11,h6:16.11,h24:26.08}};
+  var PAIR="0x5259413992d9b5626e62125de8159ed67636f0d8", PAD="0x23231924281B34Bb28F10D854DB8D2DcBd7F78c5", TOKEN="0x319A4924f6660A0660845418FA754a7684C19200";
+  var RPCS=["https://base-rpc.publicnode.com","https://mainnet.base.org"];
+  var SEL={burned:"0xa7509b83",burnPot:"0x4dd8afb6",eligible:"0xe15904e0",cashbackOf:"0x0e4a9123"};
+  var SUPPLY0=1e9, REFRESH=60000;
+  var D=JSON.parse(document.getElementById("snap").textContent);
+  var live={market:0,chain:0};  // time of the last successful direct read
+
   function $(id){return document.getElementById(id)}
   function usd(n){ if(n>=1e6)return "$"+(n/1e6).toFixed(2)+"M"; if(n>=1e3)return "$"+(n/1e3).toFixed(1)+"K"; return "$"+n.toFixed(2); }
-  function pct(v){ var s=(v>=0?"+":"")+v.toFixed(1)+"%"; return '<span class="'+(v>=0?"up":"down")+'">'+s+"</span>"; }
-  function render(p){
+  function int(n){return Math.round(n).toLocaleString("en-US")}
+  function ltc(n,dp){return n.toFixed(dp==null?4:dp)+" cbLTC"}
+  function pct(v){ v=v||0; return '<span class="'+(v>=0?"up":"down")+'">'+(v>=0?"+":"")+v.toFixed(1)+"%</span>"; }
+  function ago(t){ var s=Math.max(0,(Date.now()-t)/1000); if(s<90)return "just now"; if(s<5400)return Math.round(s/60)+" min ago"; if(s<129600)return Math.round(s/3600)+" h ago"; return Math.round(s/86400)+" days ago"; }
+  function day(ts){ return new Date(ts*1000).toLocaleString("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"UTC"}); }
+  function ltcUsd(){ var m=D.market; return m&&Number(m.priceNative)?Number(m.priceUsd)/Number(m.priceNative):0; }
+
+  function renderMarket(){
+    var p=D.market; if(!p)return;
+    var ch=p.priceChange||{}, tx=(p.txns||{}).h24||{buys:0,sells:0};
     var price="$"+Number(p.priceUsd).toLocaleString("en-US",{maximumSignificantDigits:4});
     $("price").textContent=price;
-    $("ch24").innerHTML=pct(p.priceChange.h24)+" over 24h";
+    $("ch24").innerHTML=pct(ch.h24)+" over 24h";
     $("mcap").textContent=usd(p.marketCap);
     $("liq").textContent=usd(p.liquidity.usd);
     $("liqq").textContent=(p.liquidity.quote||0).toFixed(1)+" cbLTC in the pool";
-    $("vol").textContent=usd(p.volume.h24);
-    $("tx").textContent=p.txns.h24.buys+" buys · "+p.txns.h24.sells+" sells";
-    $("changes").innerHTML=[["m5","5 MIN"],["h1","1 HOUR"],["h6","6 HOURS"],["h24","24 HOURS"]].map(function(k){return '<span class="chip"><b>'+k[1]+'</b>'+pct(p.priceChange[k[0]])+"</span>"}).join("");
-    var t="<span>LESTER "+price+"</span><span>24H "+((p.priceChange.h24>=0?"+":"")+p.priceChange.h24.toFixed(1))+"%</span><span>MCAP "+usd(p.marketCap)+"</span><span>LIQUIDITY "+usd(p.liquidity.usd)+"</span><span>THE LITECOIN MASCOT</span><span>LAUNCHED ON NOTUS PAD</span><span>MIGRATING TO LITVM</span>";
+    $("vol").textContent=usd((p.volume||{}).h24||0);
+    $("tx").textContent=tx.buys+" buys · "+tx.sells+" sells";
+    $("changes").innerHTML=[["m5","5 MIN"],["h1","1 HOUR"],["h6","6 HOURS"],["h24","24 HOURS"]].map(function(k){return '<span class="chip"><b>'+k[1]+'</b>'+pct(ch[k[0]])+"</span>"}).join("");
+    var t="<span>LESTER "+price+"</span><span>24H "+(((ch.h24||0)>=0?"+":"")+(ch.h24||0).toFixed(1))+"%</span><span>MCAP "+usd(p.marketCap)+"</span><span>BURNED "+int(D.chain.burned)+"</span><span>PAID TO HOLDERS "+ltc(D.cashback.total,2)+"</span><span>LAUNCHED ON NOTUS PAD</span><span>MIGRATING TO LITVM</span>";
     $("ticker").innerHTML=t+t;
   }
-  render(snap);
-  // Live refresh: works when hosted on a normal web server; falls back to the snapshot otherwise.
-  try{
-    fetch("https://api.dexscreener.com/latest/dex/pairs/base/0x5259413992d9b5626e62125de8159ed67636f0d8").then(function(r){return r.json()}).then(function(d){
-      var p=d&&d.pair; if(!p)return; render(p);
-      var a=$("asof"); a.classList.add("live");
-      a.innerHTML='<span class="dot"></span>Live from DexScreener · updated '+new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+  function renderRewards(){
+    var c=D.chain, cv=D.curve, pl=D.pool, cb=D.cashback, x=ltcUsd();
+    $("burned").textContent=int(c.burned);
+    $("burnedPct").textContent=(c.burned/SUPPLY0*100).toFixed(3)+"%";
+    $("burnBar").style.width=Math.max(0.6,c.burned/SUPPLY0*100)+"%";
+    $("supply").textContent=(c.supply/1e6).toFixed(2)+"M";
+    $("eligible").textContent=(c.eligible/1e6).toFixed(1)+"M in holder wallets earning cashback";
+    $("burnPot").textContent=ltc(c.burnPot);
+    $("cashback").textContent=ltc(cb.total);
+    $("cashbackSub").textContent=(x?"≈ $"+(cb.total*x).toFixed(0)+" · ":"")+ltc(cb.claimed)+" claimed by "+cb.wallets+" wallets";
+    $("phaseRows").innerHTML=
+      "<tr><td><b>Bonding curve</b><small>Oct 26 to Oct 28, 2026</small></td><td>"+(cv.buys+cv.sells)+" <small>"+cv.buys+" buys · "+cv.sells+" sells</small></td><td>"+ltc(cv.fees)+" <small>half Notus fee, half LESTER tax</small></td><td>"+ltc(cv.toHolders)+"</td><td>"+int(cv.burned)+" LESTER <small>"+cv.buybacks+" buybacks, "+ltc(cv.buybackQuote)+" spent</small></td></tr>"+
+      "<tr><td><b>Uniswap v2 pool</b><small>since Oct 28, 2026</small></td><td>"+pl.taxedSwaps+" <small>taxed swaps</small></td><td>"+(pl.taxedTokens/1e6).toFixed(2)+"M LESTER <small>sold in "+pl.harvests+" harvests</small></td><td>"+ltc(pl.toHolders)+"</td><td>"+int(pl.burned)+" LESTER <small>burned from pool fees</small></td></tr>"+
+      "<tr><td><b>Total</b></td><td>"+(cv.buys+cv.sells+pl.taxedSwaps)+"</td><td></td><td><b>"+ltc(cb.total)+"</b></td><td><b>"+int(c.burned)+" LESTER</b></td></tr>";
+    $("log").innerHTML=(D.recent||[]).slice().reverse().slice(0,10).map(function(e){
+      return e.type==="burn"
+        ? '<li class="burn"><span class="when">'+day(e.ts)+'</span><span>Burn</span><span class="amt">−'+int(e.amount)+' LESTER</span></li>'
+        : '<li class="cash"><span class="when">'+day(e.ts)+'</span><span>Harvest → holders</span><span class="amt">+'+e.amount.toFixed(4)+' cbLTC</span></li>';
+    }).join("");
+  }
+  function renderStamps(){
+    var snapT=Date.parse(D.updatedAt), a=$("asof"), r=$("rwAsof");
+    var mLive=live.market&&Date.now()-live.market<3*REFRESH, cLive=live.chain&&Date.now()-live.chain<3*REFRESH;
+    a.className="asof"+(mLive?" live":""); r.className="asof"+(cLive?" live":"");
+    a.innerHTML='<span class="dot"></span>'+(mLive?"Live from DexScreener · updated "+ago(live.market):"DexScreener data · updated "+ago(snapT));
+    r.innerHTML='<span class="dot"></span>'+(cLive?"Live from Base · supply, burns and burn pot updated "+ago(live.chain)+" · history to block "+int(D.block)+", "+ago(snapT):"On-chain data to Base block "+int(D.block)+" · updated "+ago(snapT));
+  }
+  function render(){ renderMarket(); renderRewards(); renderStamps(); }
+
+  function j(url,opt){ return fetch(url,opt).then(function(r){ if(!r.ok)throw new Error(r.status); return r.json(); }); }
+  function pad(a){return a.toLowerCase().replace("0x","").padStart(64,"0")}
+  function call(to,data,i){ i=i||0;
+    return j(RPCS[i],{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:to,data:data},"latest"]})})
+      .then(function(x){ if(x.error)throw x.error; return BigInt(x.result); })
+      .catch(function(e){ if(i+1<RPCS.length)return call(to,data,i+1); throw e; });
+  }
+  function num(bi,dec){return Number(bi)/Math.pow(10,dec)}
+
+  function refresh(){
+    // 1. data.json: history kept fresh by the scheduled updater (same origin)
+    var a=j("data.json?t="+Date.now(),{cache:"no-store"}).then(function(n){ if(n&&n.updatedAt&&Date.parse(n.updatedAt)>=Date.parse(D.updatedAt)){ var m=D.market,c=D.chain; D=n; if(live.market)D.market=m; if(live.chain)D.chain=c; } }).catch(function(){});
+    // 2. market, straight from DexScreener
+    var b=j("https://api.dexscreener.com/latest/dex/pairs/base/"+PAIR).then(function(x){ if(x&&x.pair){ D.market=x.pair; live.market=Date.now(); } }).catch(function(){});
+    // 3. supply, burns and burn pot, straight from the contract
+    var c=Promise.all([call(TOKEN,"0x18160ddd"),call(PAD,SEL.burned+pad(TOKEN)),call(PAD,SEL.burnPot+pad(TOKEN)),call(PAD,SEL.eligible+pad(TOKEN))]).then(function(r){
+      D.chain={supply:num(r[0],18),burned:num(r[1],18),burnPot:num(r[2],8),eligible:num(r[3],18)}; live.chain=Date.now();
     }).catch(function(){});
-  }catch(e){}
+    return Promise.all([a,b,c]).then(render);
+  }
+
+  render();
+  refresh();
+  setInterval(function(){ if(!document.hidden) refresh(); }, REFRESH);
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden) refresh(); });
+
   document.querySelectorAll(".copybtn").forEach(function(b){
     b.addEventListener("click",function(){
       var el=$(b.getAttribute("data-copy")), txt=el.textContent;
       function done(){ b.textContent="Copied"; setTimeout(function(){b.textContent="Copy"},1500); }
-      function sel(){ var r=document.createRange(); r.selectNodeContents(el); var s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+      function sel(){ var r=document.createRange(); r.selectNodeContents(el); var g=getSelection(); g.removeAllRanges(); g.addRange(r); }
       try{ navigator.clipboard.writeText(txt).then(done,sel); }catch(e){ sel(); }
     });
   });
-})();
 
-// ---- On-chain rewards (Base RPC). Blocked inside the artifact sandbox; live once hosted.
-(function(){
-  var RPC="https://base-rpc.publicnode.com", PAD="0x23231924281B34Bb28F10D854DB8D2DcBd7F78c5", TOKEN="0x319A4924f6660A0660845418FA754a7684C19200";
-  var SEL={burned:"0xa7509b83",burnPot:"0x4dd8afb6",eligible:"0xe15904e0",cashbackOf:"0x0e4a9123"};
-  var SUPPLY0=1e9, LTC_USD=55.39;
-  function pad(a){return a.toLowerCase().replace("0x","").padStart(64,"0")}
-  function call(to,data){return fetch(RPC,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:to,data:data},"latest"]})}).then(function(r){return r.json()}).then(function(j){if(j.error)throw j.error;return BigInt(j.result)})}
-  function fmtInt(n){return Math.round(n).toLocaleString("en-US")}
-  function $(id){return document.getElementById(id)}
-  function toNum(bi,dec){return Number(bi)/Math.pow(10,dec)}
-  Promise.all([
-    call(TOKEN,"0x18160ddd"),
-    call(PAD,SEL.burned+pad(TOKEN)),
-    call(PAD,SEL.burnPot+pad(TOKEN)),
-    call(PAD,SEL.eligible+pad(TOKEN))
-  ]).then(function(r){
-    var supply=toNum(r[0],18), burned=toNum(r[1],18), pot=toNum(r[2],8), elig=toNum(r[3],18);
-    $("burned").textContent=fmtInt(burned);
-    $("burnedPct").textContent=(burned/SUPPLY0*100).toFixed(3)+"%";
-    $("burnBar").style.width=Math.max(0.6,burned/SUPPLY0*100)+"%";
-    $("supply").textContent=(supply/1e6).toFixed(2)+"M";
-    $("eligible").textContent=(elig/1e6).toFixed(1)+"M in holder wallets earning cashback";
-    $("burnPot").textContent=pot.toFixed(4)+" cbLTC";
-    var a=$("rwAsof"); a.classList.add("live"); a.innerHTML='<span class="dot"></span>Live from Base · burned, supply and burn pot read from the contract just now. Cashback totals and the log are the Oct 31 snapshot.';
-  }).catch(function(){});
   var form=$("cbForm"), out=$("cbResult");
-  if(form) form.addEventListener("submit",function(e){
+  form.addEventListener("submit",function(e){
     e.preventDefault();
     var a=$("addr").value.trim();
-    if(!/^0x[0-9a-fA-F]{40}$/.test(a)){out.className="result err";out.textContent="That is not a valid address. It should start with 0x and be 42 characters long.";return;}
+    if(!/^0x[0-9a-fA-F]{40}$/.test(a)){ out.className="result err"; out.textContent="That is not a valid address. It should start with 0x and be 42 characters long."; return; }
     out.className="result"; out.textContent="Reading the contract…";
     Promise.all([call(PAD,SEL.cashbackOf+pad(TOKEN)+pad(a)), call(TOKEN,"0x70a08231"+pad(a))]).then(function(r){
-      var cb=toNum(r[0],8), bal=toNum(r[1],18);
-      out.innerHTML="<b>"+cb.toFixed(6)+" cbLTC</b>claimable now (≈ $"+(cb*LTC_USD).toFixed(2)+"). This wallet holds "+fmtInt(bal)+" LESTER"+(bal>0?", so it keeps earning on every trade.":".");
-    }).catch(function(){ out.className="result err"; out.textContent="Could not reach the Base RPC from here. Open the hosted site, or check on Notus Pad."; });
+      var cb=num(r[0],8), bal=num(r[1],18), x=ltcUsd();
+      out.innerHTML="<b>"+cb.toFixed(6)+" cbLTC</b>claimable now"+(x?" (≈ $"+(cb*x).toFixed(2)+")":"")+". This wallet holds "+int(bal)+" LESTER"+(bal>0?", so it keeps earning on every trade.":".");
+    }).catch(function(){ out.className="result err"; out.textContent="Could not reach the Base network from here. Try again in a moment, or check on Notus Pad."; });
   });
 })();
 </script>
