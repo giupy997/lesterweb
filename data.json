@@ -1,19 +1,18 @@
 {
- "updatedAt": "2026-11-20T16:03:53Z",
- "block": 60001262,
+ "updatedAt": "2026-11-20T22:38:15Z",
+ "block": 60119580,
  "market": {
-  "priceUsd": "0.00003319",
-  "priceNative": "0.0000008238",
-  "marketCap": 32830,
+  "priceUsd": "0.00003348",
+  "priceNative": "0.0000008385",
+  "marketCap": 33119,
   "liquidity": {
-   "base": 194953845,
-   "quote": 160.6141,
-   "usd": 12941.15
+   "base": 193259587,
+   "quote": 162.06044,
+   "usd": 12942.39
   },
   "volume": {
-   "h24": 1071.45,
-   "h6": 502.69,
-   "h1": 491.45
+   "h24": 1134.81,
+   "h6": 503.33
   },
   "txns": {
    "m5": {
@@ -21,29 +20,28 @@
     "sells": 0
    },
    "h1": {
-    "buys": 2,
-    "sells": 1
+    "buys": 0,
+    "sells": 0
    },
    "h6": {
-    "buys": 3,
+    "buys": 8,
     "sells": 2
    },
    "h24": {
-    "buys": 5,
-    "sells": 8
+    "buys": 12,
+    "sells": 5
    }
   },
   "priceChange": {
-   "h1": 14.09,
-   "h6": 12.99,
-   "h24": 10.92
+   "h6": 0.89,
+   "h24": 19.01
   }
  },
  "chain": {
-  "supply": 989116566.5181854,
-  "burned": 10883433.481814664,
+  "supply": 989077423.724207,
+  "burned": 10922576.27579291,
   "burnPot": 0.0,
-  "eligible": 784626898.3186727
+  "eligible": 786281573.3882767
  },
  "curve": {
   "buys": 97,
@@ -55,33 +53,21 @@
   "burned": 4571533.97771972
  },
  "pool": {
-  "taxedSwaps": 663,
-  "taxedTokens": 24644045.916667134,
-  "harvests": 215,
-  "toHolders": 3.89171097,
+  "taxedSwaps": 672,
+  "taxedTokens": 24801057.573480055,
+  "harvests": 216,
+  "toHolders": 3.92403739,
   "buybacks": 1,
   "buybackQuote": 0.10427329,
-  "burned": 6311899.504094943
+  "burned": 6351042.298073189
  },
  "cashback": {
-  "total": 5.54012391,
+  "total": 5.572450330000001,
   "claimed": 0.93834336,
   "claims": 26,
   "wallets": 17
  },
  "recent": [
-  {
-   "type": "cashback",
-   "block": 59383753,
-   "amount": 0.00497017,
-   "ts": 1795067126
-  },
-  {
-   "type": "burn",
-   "block": 59383753,
-   "amount": 6161.5433950545175,
-   "ts": 1795067126
-  },
   {
    "type": "cashback",
    "block": 59544050,
@@ -153,10 +139,22 @@
    "block": 59989162,
    "amount": 37451.11946512386,
    "ts": 1795188208
+  },
+  {
+   "type": "cashback",
+   "block": 60049212,
+   "amount": 0.03232642,
+   "ts": 1795200218
+  },
+  {
+   "type": "burn",
+   "block": 60049212,
+   "amount": 39142.79397824556,
+   "ts": 1795200218
   }
  ],
  "state": {
-  "scannedTo": 60001262,
+  "scannedTo": 60119580,
   "curve": {
    "buys": 97,
    "sells": 41,
@@ -165,18 +163,18 @@
    "buybackQuote": "154413943"
   },
   "pool": {
-   "taxedSwaps": 663,
-   "taxedTokens": "24644045916667131450368222",
-   "harvests": 215,
-   "toHolders": "389171097",
-   "toTreasury": "739425412",
+   "taxedSwaps": 672,
+   "taxedTokens": "24801057573480053016553758",
+   "harvests": 216,
+   "toHolders": "392403739",
+   "toTreasury": "745567432",
    "buybacks": 1,
    "buybackQuote": "10427329"
   },
   "burn": {
    "curve": "4571533977719720244712300",
-   "pool": "6311899504094943739642044",
-   "events": 222
+   "pool": "6351042298073189294827683",
+   "events": 223
   },
   "claims": {
    "n": 26,
@@ -202,18 +200,6 @@
    ]
   },
   "recent": [
-   {
-    "type": "cashback",
-    "block": 59383753,
-    "amount": 0.00497017,
-    "ts": 1795067126
-   },
-   {
-    "type": "burn",
-    "block": 59383753,
-    "amount": 6161.5433950545175,
-    "ts": 1795067126
-   },
    {
     "type": "cashback",
     "block": 59544050,
@@ -285,6 +271,18 @@
     "block": 59989162,
     "amount": 37451.11946512386,
     "ts": 1795188208
+   },
+   {
+    "type": "cashback",
+    "block": 60049212,
+    "amount": 0.03232642,
+    "ts": 1795200218
+   },
+   {
+    "type": "burn",
+    "block": 60049212,
+    "amount": 39142.79397824556,
+    "ts": 1795200218
    }
   ]
  }
