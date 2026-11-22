@@ -1,6 +1,6 @@
 {
- "updatedAt": "2026-11-22T12:00:18Z",
- "block": 60792202,
+ "updatedAt": "2026-11-22T19:28:36Z",
+ "block": 60926689,
  "market": {
   "priceUsd": "0.00002741",
   "priceNative": "0.0000006889",
@@ -11,8 +11,7 @@
    "usd": 11699.06
   },
   "volume": {
-   "h24": 964.98,
-   "h6": 334.16
+   "h24": 334.16
   },
   "txns": {
    "m5": {
@@ -24,17 +23,16 @@
     "sells": 0
    },
    "h6": {
-    "buys": 1,
-    "sells": 3
+    "buys": 0,
+    "sells": 0
    },
    "h24": {
-    "buys": 5,
-    "sells": 8
+    "buys": 1,
+    "sells": 3
    }
   },
   "priceChange": {
-   "h6": -0.06,
-   "h24": 15.41
+   "h24": -4.17
   }
  },
  "chain": {
@@ -154,7 +152,7 @@
   }
  ],
  "state": {
-  "scannedTo": 60792202,
+  "scannedTo": 60926689,
   "curve": {
    "buys": 97,
    "sells": 41,
